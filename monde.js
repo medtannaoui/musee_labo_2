@@ -102,18 +102,18 @@ class Monde {
             canvas.width = 256;
             canvas.height = 64;
             ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, canvas.width/2, canvas.height/2);
             ctx.fillStyle = '#000000';
             ctx.font = 'bold 36px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(titreTexte, canvas.width / 2, canvas.height / 2);
+            ctx.fillText(titreTexte, canvas.width / 4, canvas.height / 4);
             const texture = new THREE.CanvasTexture(canvas);
 
             const panneauGeo = new THREE.PlaneGeometry(2, 0.6);
             const panneauMat = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
             const panneau = new THREE.Mesh(panneauGeo, panneauMat);
-            panneau.position.set(xPos, porteHauteur + 0.5, zMur + 0.2);
+            panneau.position.set(xPos+0.5, porteHauteur - 0.5, zMur + 0.2);
             this.scene.add(panneau);
         });
 
