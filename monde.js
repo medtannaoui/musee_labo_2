@@ -183,6 +183,61 @@ class Monde {
         const sphere = new THREE.Mesh(sphereGeo, sphereMat);
         sphere.position.set(0, 1, 0);
         this.scene.add(sphere);
+        // === TABLEAUX dans la GRANDE SALLE (HALL) ===
+        const loader = new THREE.TextureLoader();
+        const imagePaths = [
+            "./assets/images/cats/cat0.jpg",
+            "./assets/images/brest/1.jpg",
+            "./assets/images/picasso/Femme au beret et a la robe quadrillee.jpg",
+            "./assets/images/picasso/Jacqueline.jpg",
+            "./assets/images/MAN002.jpg",
+            "./assets/images/2.JPG",
+            "./assets/images/3.JPG",
+            "./assets/images/4.JPG",
+            "./assets/images/5.JPG",
+            "./assets/images/vigArt/1001 nuits.jpg",
+            "./assets/images/vigArt/Symphonie.jpg",
+            "./assets/images/vigArt/Two worlds.jpg"
+        ];
+
+        // Paramètres d’exposition
+        const hauteur = 2;        // hauteur moyenne des tableaux
+        const largeur = 2;        // largeur d’un tableau
+        const hauteurCadre = 1.5; // hauteur d’un tableau
+        let index = 0;
+
+        // === MUR DU FOND DU HALL (face aux trois petites salles, z = 10) ===
+        for (let i = 0; i < 4; i++) {
+            const tex = loader.load(imagePaths[index++ % imagePaths.length]);
+            const cadreGeo = new THREE.PlaneGeometry(largeur, hauteurCadre);
+            const cadreMat = new THREE.MeshStandardMaterial({ map: tex });
+            const cadre = new THREE.Mesh(cadreGeo, cadreMat);
+            cadre.position.set(-6 + i * 4, hauteur, 9.5); // espacés le long du mur
+            cadre.rotation.y = Math.PI; // face vers le centre du hall
+            this.scene.add(cadre);
+        }
+
+        // === MUR DROIT DU HALL (x = 10, face vers le centre) ===
+        for (let i = 0; i < 4; i++) {
+            const tex = loader.load(imagePaths[index++ % imagePaths.length]);
+            const cadreGeo = new THREE.PlaneGeometry(largeur, hauteurCadre);
+            const cadreMat = new THREE.MeshStandardMaterial({ map: tex });
+            const cadre = new THREE.Mesh(cadreGeo, cadreMat);
+            cadre.rotation.y = -Math.PI / 2; // regarde vers le centre
+            cadre.position.set(9.5, hauteur, 2 + i * 3 - 4); // bien répartis le long du mur
+            this.scene.add(cadre);
+        }
+
+        // === MUR GAUCHE DU HALL (x = -10, face vers le centre) ===
+        for (let i = 0; i < 4; i++) {
+            const tex = loader.load(imagePaths[index++ % imagePaths.length]);
+            const cadreGeo = new THREE.PlaneGeometry(largeur, hauteurCadre);
+            const cadreMat = new THREE.MeshStandardMaterial({ map: tex });
+            const cadre = new THREE.Mesh(cadreGeo, cadreMat);
+            cadre.rotation.y = Math.PI / 2; // regarde vers le centre
+            cadre.position.set(-9.5, hauteur, 2 + i * 3 - 4);
+            this.scene.add(cadre);
+        }
 
         // === TABLEAUX ===
         const textureLoader = new THREE.TextureLoader();
